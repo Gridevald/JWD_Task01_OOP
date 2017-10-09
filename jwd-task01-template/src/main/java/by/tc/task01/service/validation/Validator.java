@@ -11,6 +11,9 @@ import java.util.regex.Pattern;
 public class Validator {
 
     public static <E> boolean criteriaValidator(Criteria<E> criteria) {
+        if (criteria.getCriteria().size() == 0) {
+            return false;
+        }
         for (Map.Entry<E, Object> entry : criteria.getCriteria().entrySet()) {
             if (DoubleFields.isDouble(entry.getKey().toString())) {
                 if (!validateDouble(entry.getValue())) {

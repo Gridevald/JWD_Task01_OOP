@@ -6,6 +6,8 @@ import by.tc.task01.main.PrintApplianceInfo;
 import by.tc.task01.service.impl.ApplianceServiceImpl;
 import org.junit.Test;
 
+import static org.junit.Assert.assertTrue;
+
 public class FindTest {
 
     @Test
@@ -21,5 +23,12 @@ public class FindTest {
         Criteria<SearchCriteria.Oven> criteria = new Criteria<>();
         criteria.add(SearchCriteria.Oven.POWER_CONSUMPTION, 1000);
         PrintApplianceInfo.print(new ApplianceServiceImpl().find(criteria));
+    }
+
+    @Test
+    public void findEmpty() {
+        Criteria<SearchCriteria.Laptop> criteria = new Criteria<>();
+        ApplianceServiceImpl a = new ApplianceServiceImpl();
+        assertTrue(a.find(criteria) == null);
     }
 }

@@ -47,4 +47,10 @@ public class ValidatorTest {
         criteriaOven.add(SearchCriteria.Oven.DEPTH, 300);
         assertFalse(Validator.criteriaValidator(criteriaOven));
     }
+
+    @Test
+    public void testSix() {
+        Criteria<SearchCriteria.Laptop> criteria = new Criteria<>();
+        assertFalse(Validator.criteriaValidator(criteria));
+    }
 }
