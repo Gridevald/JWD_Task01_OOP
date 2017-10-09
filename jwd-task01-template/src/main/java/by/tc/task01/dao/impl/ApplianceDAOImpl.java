@@ -23,7 +23,6 @@ public class ApplianceDAOImpl implements ApplianceDAO {
         try (Scanner sc = new Scanner(new File("src/main/resources/appliances_db.txt"))) {
             while (sc.hasNextLine()) {
                 Map<String, String> entityAsMap = parseLine(sc.nextLine());
-
                 if (entityAsMap != null && name.equals(entityAsMap.get(StringFields.NAME.name()))) {
                     if (isSame(criteria, entityAsMap)) {
                         return createEntity(entityAsMap);

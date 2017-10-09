@@ -19,7 +19,7 @@ public class ScannerTest {
                 }
                 System.out.println(temp);
             }
-            System.out.println("number of empty lines" + counter);
+            System.out.println("number of empty lines: " + counter);
         } catch (IOException e) {
             System.err.println("Read file error.");
         }
