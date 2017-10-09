@@ -22,7 +22,6 @@ public class ApplianceDAOImpl implements ApplianceDAO {
         try (Scanner sc = new Scanner(new File("src/main/resources/appliances_db.txt"))) {
             while (sc.hasNextLine()) {
                 Map<String, String> entityAsMap = parseLine(sc.nextLine());
-                //TODO: switch to get string field with class name
                 String name = criteria.getCriteria().entrySet()
                         .iterator().next().getKey().getClass().getSimpleName();
                 if (entityAsMap != null && name.equals(entityAsMap.get(StringFields.NAME.name()))) {
@@ -41,7 +40,7 @@ public class ApplianceDAOImpl implements ApplianceDAO {
         Map<String, String> result = null;
         if (!line.equals("")) {
             result = new HashMap<>();
-            Matcher nameMatcher = Pattern.compile("[\\p{Upper}\\p{Lower}]+(?=\\p{Blank}:)").matcher(line);
+            Matcher nameMatcher = Pattern.compile("[\\p{Alpha}]+(?=\\p{Blank}:)").matcher(line);
             if (nameMatcher.find()) {
                 result.put(StringFields.NAME.name(), nameMatcher.group());
             }
