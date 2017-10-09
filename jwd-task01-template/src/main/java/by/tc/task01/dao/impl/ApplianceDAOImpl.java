@@ -19,11 +19,11 @@ public class ApplianceDAOImpl implements ApplianceDAO {
 
     @Override
     public <E> Appliance find(Criteria<E> criteria) {
+        String name = criteria.getApplianceType();
         try (Scanner sc = new Scanner(new File("src/main/resources/appliances_db.txt"))) {
             while (sc.hasNextLine()) {
                 Map<String, String> entityAsMap = parseLine(sc.nextLine());
-                String name = criteria.getCriteria().entrySet()
-                        .iterator().next().getKey().getClass().getSimpleName();
+
                 if (entityAsMap != null && name.equals(entityAsMap.get(StringFields.NAME.name()))) {
                     if (isSame(criteria, entityAsMap)) {
                         return createEntity(entityAsMap);

@@ -15,6 +15,9 @@ public class Validator {
             return false;
         }
         for (Map.Entry<E, Object> entry : criteria.getCriteria().entrySet()) {
+            if (entry.getKey() == null) {
+                return false;
+            }
             if (DoubleFields.isDouble(entry.getKey().toString())) {
                 if (!validateDouble(entry.getValue())) {
                     return false;

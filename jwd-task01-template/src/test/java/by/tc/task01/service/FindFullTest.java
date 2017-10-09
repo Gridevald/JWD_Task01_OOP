@@ -13,6 +13,7 @@ public class FindFullTest {
     @Test
     public void laptopTest() {
         Criteria<SearchCriteria.Laptop> criteria = new Criteria<>();
+        criteria.setApplianceType("Laptop");
         criteria.add(SearchCriteria.Laptop.BATTERY_CAPACITY, 1);
         criteria.add(SearchCriteria.Laptop.OS, "windows");
         criteria.add(SearchCriteria.Laptop.MEMORY_ROM, 4000);
@@ -27,6 +28,7 @@ public class FindFullTest {
     @Test
     public void ovenTest() {
         Criteria<SearchCriteria.Oven> criteria = new Criteria<>();
+        criteria.setApplianceType("Oven");
         criteria.add(SearchCriteria.Oven.POWER_CONSUMPTION, 1000);
         criteria.add(SearchCriteria.Oven.WEIGHT, 10);
         criteria.add(SearchCriteria.Oven.CAPACITY, 32);
@@ -41,6 +43,7 @@ public class FindFullTest {
     @Test
     public void refrigeratorTest() {
         Criteria<SearchCriteria.Refrigerator> criteria = new Criteria<>();
+        criteria.setApplianceType("Refrigerator");
         criteria.add(SearchCriteria.Refrigerator.POWER_CONSUMPTION, 100);
         criteria.add(SearchCriteria.Refrigerator.WEIGHT, 20);
         criteria.add(SearchCriteria.Refrigerator.FREEZER_CAPACITY, 10);
@@ -55,6 +58,7 @@ public class FindFullTest {
     @Test
     public void  speakersTest() {
         Criteria<SearchCriteria.Speakers> criteria = new Criteria<>();
+        criteria.setApplianceType("Speakers");
         criteria.add(SearchCriteria.Speakers.POWER_CONSUMPTION, 15);
         criteria.add(SearchCriteria.Speakers.NUMBER_OF_SPEAKERS, 2);
         criteria.add(SearchCriteria.Speakers.FREQUENCY_RANGE, "2-4");
@@ -67,6 +71,7 @@ public class FindFullTest {
     @Test
     public void tabletPC() {
         Criteria<SearchCriteria.TabletPC> criteria = new Criteria<>();
+        criteria.setApplianceType("TabletPC");
         criteria.add(SearchCriteria.TabletPC.BATTERY_CAPACITY, 3);
         criteria.add(SearchCriteria.TabletPC.DISPLAY_INCHES, 14);
         criteria.add(SearchCriteria.TabletPC.MEMORY_ROM, 8000);
@@ -80,6 +85,7 @@ public class FindFullTest {
     @Test
     public void vacuumCleaner() {
         Criteria<SearchCriteria.VacuumCleaner> criteria = new Criteria<>();
+        criteria.setApplianceType("VacuumCleaner");
         criteria.add(SearchCriteria.VacuumCleaner.POWER_CONSUMPTION, 100);
         criteria.add(SearchCriteria.VacuumCleaner.FILTER_TYPE, "a");
         criteria.add(SearchCriteria.VacuumCleaner.BAG_TYPE, "A2");

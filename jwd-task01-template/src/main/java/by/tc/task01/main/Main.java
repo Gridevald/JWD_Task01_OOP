@@ -18,6 +18,7 @@ public class Main {
         //////////////////////////////////////////////////////////////////
 
         Criteria<Oven> criteriaOven = new Criteria<>();
+        criteriaOven.setApplianceType("Oven");
         criteriaOven.add(Oven.CAPACITY, 3);
 
         appliance = service.find(criteriaOven);
@@ -27,6 +28,7 @@ public class Main {
         //////////////////////////////////////////////////////////////////
 
         criteriaOven = new Criteria<>();
+        criteriaOven.setApplianceType("Oven");
         criteriaOven.add(Oven.HEIGHT, 200);
         criteriaOven.add(Oven.DEPTH, 300);
 
@@ -37,6 +39,7 @@ public class Main {
         //////////////////////////////////////////////////////////////////
 
         Criteria<TabletPC> criteriaTabletPC = new Criteria<>();
+        criteriaTabletPC.setApplianceType("TabletPC");
         criteriaTabletPC.add(TabletPC.COLOR, "BLUE");
         criteriaTabletPC.add(TabletPC.DISPLAY_INCHES, 14);
         criteriaTabletPC.add(TabletPC.MEMORY_ROM, 4);
