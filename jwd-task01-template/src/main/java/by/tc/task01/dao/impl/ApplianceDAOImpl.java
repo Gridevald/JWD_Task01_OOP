@@ -22,10 +22,10 @@ public class ApplianceDAOImpl implements ApplianceDAO {
         String name = criteria.getApplianceType();
         try (Scanner sc = new Scanner(new File("src/main/resources/appliances_db.txt"))) {
             while (sc.hasNextLine()) {
-                Map<String, String> entityAsMap = parseLine(sc.nextLine());
-                if (entityAsMap != null && name.equals(entityAsMap.get(StringFields.NAME.name()))) {
-                    if (isSame(criteria, entityAsMap)) {
-                        return createEntity(entityAsMap);
+                Map<String, String> fieldsMap = parseLine(sc.nextLine());
+                if (fieldsMap != null && name.equals(fieldsMap.get(StringFields.NAME.name()))) {
+                    if (isMatches(criteria, fieldsMap)) {
+                        return createEntity(fieldsMap);
                     }
                 }
             }
@@ -36,33 +36,33 @@ public class ApplianceDAOImpl implements ApplianceDAO {
     }
 
     private Map<String, String> parseLine(String line) {
-        Map<String, String> result = null;
+        Map<String, String> fieldsMap = null;
         if (!line.equals("")) {
-            result = new HashMap<>();
+            fieldsMap = new HashMap<>();
             Matcher nameMatcher = Pattern.compile("[\\p{Alpha}]+(?=\\p{Blank}:)").matcher(line);
             if (nameMatcher.find()) {
-                result.put(StringFields.NAME.name(), nameMatcher.group());
+                fieldsMap.put(StringFields.NAME.name(), nameMatcher.group());
             }
             Matcher optionMatcher = Pattern.compile("[\\p{Upper}_]+=[\\p{Alnum}\\-\\.]+").matcher(line);
             while (optionMatcher.find()) {
                 String[] temp = optionMatcher.group().split("=");
-                result.put(temp[0], temp[1]);
+                fieldsMap.put(temp[0], temp[1]);
             }
         }
-        return result;
+        return fieldsMap;
     }
 
-    private <E> boolean isSame(Criteria<E> criteria, Map<String, String> line) {
+    private <E> boolean isMatches(Criteria<E> criteria, Map<String, String> fieldsMap) {
         for (Map.Entry<E, Object> entry : criteria.getCriteria().entrySet()) {
             if (IntegerFields.isInteger(entry.getKey().toString()) ||
                     DoubleFields.isDouble(entry.getKey().toString())) {
                 if (!Double.valueOf(String.valueOf(entry.getValue()))
-                        .equals(Double.valueOf(line.get(entry.getKey().toString())))) {
+                        .equals(Double.valueOf(fieldsMap.get(entry.getKey().toString())))) {
                     return false;
                 }
             } else {
                 if (!String.valueOf(entry.getValue()).trim()
-                        .equalsIgnoreCase(line.get(entry.getKey().toString()))) {
+                        .equalsIgnoreCase(fieldsMap.get(entry.getKey().toString()))) {
                     return false;
                 }
             }
@@ -70,86 +70,86 @@ public class ApplianceDAOImpl implements ApplianceDAO {
         return true;
     }
 
-    private Appliance createEntity(Map<String, String> entityAsMap) {
-        switch (entityAsMap.get(StringFields.NAME.name())) {
+    private Appliance createEntity(Map<String, String> fieldsMap) {
+        switch (fieldsMap.get(StringFields.NAME.name())) {
             case "Laptop":
-                return createLaptop(entityAsMap);
+                return createLaptop(fieldsMap);
             case "Oven":
-                return createOven(entityAsMap);
+                return createOven(fieldsMap);
             case "Refrigerator":
-                return createRefrigerator(entityAsMap);
+                return createRefrigerator(fieldsMap);
             case "Speakers":
-                return createSpeakers(entityAsMap);
+                return createSpeakers(fieldsMap);
             case "TabletPC":
-                return createTabletPC(entityAsMap);
+                return createTabletPC(fieldsMap);
             case "VacuumCleaner":
-                return createVacuumCleaner(entityAsMap);
+                return createVacuumCleaner(fieldsMap);
             default:
                 return null;
         }
 
     }
 
-    private Laptop createLaptop(Map<String, String> entityAsMap) {
+    private Laptop createLaptop(Map<String, String> fieldsMap) {
         Laptop laptop = new Laptop();
-        laptop.setBatteryCapacity(Double.valueOf(entityAsMap.get(DoubleFields.BATTERY_CAPACITY.name())));
-        laptop.setOs(entityAsMap.get(StringFields.OS.name()));
-        laptop.setMemoryRom(Integer.valueOf(entityAsMap.get(IntegerFields.MEMORY_ROM.name())));
-        laptop.setSystemMemory(Integer.valueOf(entityAsMap.get(IntegerFields.SYSTEM_MEMORY.name())));
-        laptop.setCpu(Double.valueOf(entityAsMap.get(DoubleFields.CPU.name())));
-        laptop.setDisplayInches(Double.valueOf(entityAsMap.get(DoubleFields.DISPLAY_INCHS.name())));
+        laptop.setBatteryCapacity(Double.valueOf(fieldsMap.get(DoubleFields.BATTERY_CAPACITY.name())));
+        laptop.setOs(fieldsMap.get(StringFields.OS.name()));
+        laptop.setMemoryRom(Integer.valueOf(fieldsMap.get(IntegerFields.MEMORY_ROM.name())));
+        laptop.setSystemMemory(Integer.valueOf(fieldsMap.get(IntegerFields.SYSTEM_MEMORY.name())));
+        laptop.setCpu(Double.valueOf(fieldsMap.get(DoubleFields.CPU.name())));
+        laptop.setDisplayInches(Double.valueOf(fieldsMap.get(DoubleFields.DISPLAY_INCHS.name())));
         return laptop;
     }
 
-    private Oven createOven(Map<String, String> entityAsMap) {
+    private Oven createOven(Map<String, String> fieldsMap) {
         Oven oven = new Oven();
-        oven.setPowerConsumption(Integer.valueOf(entityAsMap.get(IntegerFields.POWER_CONSUMPTION.name())));
-        oven.setWeight(Double.valueOf(entityAsMap.get(DoubleFields.WEIGHT.name())));
-        oven.setCapacity(Double.valueOf(entityAsMap.get(DoubleFields.CAPACITY.name())));
-        oven.setDepth(Double.valueOf(entityAsMap.get(DoubleFields.DEPTH.name())));
-        oven.setHeight(Double.valueOf(entityAsMap.get(DoubleFields.HEIGHT.name())));
-        oven.setWidth(Double.valueOf(entityAsMap.get(DoubleFields.WIDTH.name())));
+        oven.setPowerConsumption(Integer.valueOf(fieldsMap.get(IntegerFields.POWER_CONSUMPTION.name())));
+        oven.setWeight(Double.valueOf(fieldsMap.get(DoubleFields.WEIGHT.name())));
+        oven.setCapacity(Double.valueOf(fieldsMap.get(DoubleFields.CAPACITY.name())));
+        oven.setDepth(Double.valueOf(fieldsMap.get(DoubleFields.DEPTH.name())));
+        oven.setHeight(Double.valueOf(fieldsMap.get(DoubleFields.HEIGHT.name())));
+        oven.setWidth(Double.valueOf(fieldsMap.get(DoubleFields.WIDTH.name())));
         return oven;
     }
 
-    private Refrigerator createRefrigerator(Map<String, String> entityAsMap) {
+    private Refrigerator createRefrigerator(Map<String, String> fieldsMap) {
         Refrigerator refrigerator = new Refrigerator();
-        refrigerator.setPowerConsumption(Integer.valueOf(entityAsMap.get(IntegerFields.POWER_CONSUMPTION.name())));
-        refrigerator.setWeight(Double.valueOf(entityAsMap.get(DoubleFields.WEIGHT.name())));
-        refrigerator.setFreezerCapacity(Double.valueOf(entityAsMap.get(DoubleFields.FREEZER_CAPACITY.name())));
-        refrigerator.setOverallCapacity(Double.valueOf(entityAsMap.get(DoubleFields.OVERALL_CAPACITY.name())));
-        refrigerator.setHeight(Double.valueOf(entityAsMap.get(DoubleFields.HEIGHT.name())));
-        refrigerator.setWidth(Double.valueOf(entityAsMap.get(DoubleFields.WIDTH.name())));
+        refrigerator.setPowerConsumption(Integer.valueOf(fieldsMap.get(IntegerFields.POWER_CONSUMPTION.name())));
+        refrigerator.setWeight(Double.valueOf(fieldsMap.get(DoubleFields.WEIGHT.name())));
+        refrigerator.setFreezerCapacity(Double.valueOf(fieldsMap.get(DoubleFields.FREEZER_CAPACITY.name())));
+        refrigerator.setOverallCapacity(Double.valueOf(fieldsMap.get(DoubleFields.OVERALL_CAPACITY.name())));
+        refrigerator.setHeight(Double.valueOf(fieldsMap.get(DoubleFields.HEIGHT.name())));
+        refrigerator.setWidth(Double.valueOf(fieldsMap.get(DoubleFields.WIDTH.name())));
         return refrigerator;
     }
 
-    private Speakers createSpeakers(Map<String, String> entityAsMap) {
+    private Speakers createSpeakers(Map<String, String> fieldsMap) {
         Speakers speakers = new Speakers();
-        speakers.setPowerConsumption(Integer.valueOf(entityAsMap.get(IntegerFields.POWER_CONSUMPTION.name())));
-        speakers.setNumberOfSpeakers(Integer.valueOf(entityAsMap.get(IntegerFields.NUMBER_OF_SPEAKERS.name())));
-        speakers.setFrequencyRange(entityAsMap.get(StringFields.FREQUENCY_RANGE.name()));
-        speakers.setCordLength(Double.valueOf(entityAsMap.get(DoubleFields.CORD_LENGTH.name())));
+        speakers.setPowerConsumption(Integer.valueOf(fieldsMap.get(IntegerFields.POWER_CONSUMPTION.name())));
+        speakers.setNumberOfSpeakers(Integer.valueOf(fieldsMap.get(IntegerFields.NUMBER_OF_SPEAKERS.name())));
+        speakers.setFrequencyRange(fieldsMap.get(StringFields.FREQUENCY_RANGE.name()));
+        speakers.setCordLength(Double.valueOf(fieldsMap.get(DoubleFields.CORD_LENGTH.name())));
         return speakers;
     }
 
-    private TabletPC createTabletPC(Map<String, String> entityAsMap) {
+    private TabletPC createTabletPC(Map<String, String> fieldsMap) {
         TabletPC tabletPC = new TabletPC();
-        tabletPC.setBatteryCapacity(Double.valueOf(entityAsMap.get(DoubleFields.BATTERY_CAPACITY.name())));
-        tabletPC.setDisplayInches(Double.valueOf(entityAsMap.get(DoubleFields.DISPLAY_INCHES.name())));
-        tabletPC.setMemoryRom(Integer.valueOf(entityAsMap.get(IntegerFields.MEMORY_ROM.name())));
-        tabletPC.setFlashMemoryCapacity(Integer.valueOf(entityAsMap.get(IntegerFields.FLASH_MEMORY_CAPACITY.name())));
-        tabletPC.setColor(entityAsMap.get(StringFields.COLOR.name()));
+        tabletPC.setBatteryCapacity(Double.valueOf(fieldsMap.get(DoubleFields.BATTERY_CAPACITY.name())));
+        tabletPC.setDisplayInches(Double.valueOf(fieldsMap.get(DoubleFields.DISPLAY_INCHES.name())));
+        tabletPC.setMemoryRom(Integer.valueOf(fieldsMap.get(IntegerFields.MEMORY_ROM.name())));
+        tabletPC.setFlashMemoryCapacity(Integer.valueOf(fieldsMap.get(IntegerFields.FLASH_MEMORY_CAPACITY.name())));
+        tabletPC.setColor(fieldsMap.get(StringFields.COLOR.name()));
         return tabletPC;
     }
 
-    private VacuumCleaner createVacuumCleaner(Map<String, String> entityAsMap) {
+    private VacuumCleaner createVacuumCleaner(Map<String, String> fieldsMap) {
         VacuumCleaner vacuumCleaner = new VacuumCleaner();
-        vacuumCleaner.setPowerConsumption(Integer.valueOf(entityAsMap.get(IntegerFields.POWER_CONSUMPTION.name())));
-        vacuumCleaner.setFilterType(entityAsMap.get(StringFields.FILTER_TYPE.name()));
-        vacuumCleaner.setBagType(entityAsMap.get(StringFields.BAG_TYPE.name()));
-        vacuumCleaner.setWandType(entityAsMap.get(StringFields.WAND_TYPE.name()));
-        vacuumCleaner.setMotorSpeedRegulation(Integer.valueOf(entityAsMap.get(IntegerFields.MOTOR_SPEED_REGULATION.name())));
-        vacuumCleaner.setCleaningWidth(Integer.valueOf(entityAsMap.get(IntegerFields.CLEANING_WIDTH.name())));
+        vacuumCleaner.setPowerConsumption(Integer.valueOf(fieldsMap.get(IntegerFields.POWER_CONSUMPTION.name())));
+        vacuumCleaner.setFilterType(fieldsMap.get(StringFields.FILTER_TYPE.name()));
+        vacuumCleaner.setBagType(fieldsMap.get(StringFields.BAG_TYPE.name()));
+        vacuumCleaner.setWandType(fieldsMap.get(StringFields.WAND_TYPE.name()));
+        vacuumCleaner.setMotorSpeedRegulation(Integer.valueOf(fieldsMap.get(IntegerFields.MOTOR_SPEED_REGULATION.name())));
+        vacuumCleaner.setCleaningWidth(Integer.valueOf(fieldsMap.get(IntegerFields.CLEANING_WIDTH.name())));
         return vacuumCleaner;
     }
 }
