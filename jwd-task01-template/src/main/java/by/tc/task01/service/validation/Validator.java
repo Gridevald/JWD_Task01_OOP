@@ -8,8 +8,14 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Validates double and integer values
+ */
 public class Validator {
 
+    /**
+     * Validates value, if criteria key is integer or double field.
+     */
     public static <E> boolean criteriaValidator(Criteria<E> criteria) {
         if (criteria.getCriteria().size() == 0) {
             return false;

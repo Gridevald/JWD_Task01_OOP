@@ -35,6 +35,9 @@ public class ApplianceDAOImpl implements ApplianceDAO {
         return null;
     }
 
+    /**
+     * Creates Map, witch contains pairs of entity fields and it's values
+     */
     private Map<String, String> parseLine(String line) {
         Map<String, String> fieldsMap = null;
         if (!line.equals("")) {
@@ -52,6 +55,9 @@ public class ApplianceDAOImpl implements ApplianceDAO {
         return fieldsMap;
     }
 
+    /**
+     * Finds out if given entity matches given criteria
+     */
     private <E> boolean isMatches(Criteria<E> criteria, Map<String, String> fieldsMap) {
         for (Map.Entry<E, Object> entry : criteria.getCriteria().entrySet()) {
             if (IntegerFields.isInteger(entry.getKey().toString()) ||
@@ -70,6 +76,9 @@ public class ApplianceDAOImpl implements ApplianceDAO {
         return true;
     }
 
+    /**
+     * Creates accordant entity
+     */
     private Appliance createEntity(Map<String, String> fieldsMap) {
         switch (fieldsMap.get(StringFields.NAME.name())) {
             case "Laptop":

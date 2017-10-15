@@ -1,5 +1,7 @@
 package by.tc.task01.dao;
-
+/**
+ * Contains string fields of entities.
+ */
 public enum StringFields {
     NAME,
     OS,

@@ -3,6 +3,9 @@ package by.tc.task01.dao;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Contains double fields of entities.
+ */
 public enum DoubleFields {
     WEIGHT,
     DEPTH,
@@ -34,6 +37,9 @@ public enum DoubleFields {
         CHECK.add(CORD_LENGTH.name());
     }
 
+    /**
+     * Returns true if given key is double
+     */
     public static boolean isDouble(String key) {
         return CHECK.contains(key);
     }

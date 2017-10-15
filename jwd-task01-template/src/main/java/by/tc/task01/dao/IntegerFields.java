@@ -2,7 +2,9 @@ package by.tc.task01.dao;
 
 import java.util.HashSet;
 import java.util.Set;
-
+/**
+ * Contains integer fields of entities.
+ */
 public enum IntegerFields {
     POWER_CONSUMPTION,
     MEMORY_ROM,
@@ -24,6 +26,9 @@ public enum IntegerFields {
         CHECK.add(NUMBER_OF_SPEAKERS.name());
     }
 
+    /**
+     * Returns true if given key is integer
+     */
     public static boolean isInteger(String key) {
         return CHECK.contains(key);
     }
