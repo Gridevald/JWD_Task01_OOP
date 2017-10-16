@@ -13,6 +13,10 @@ import java.util.regex.Pattern;
  */
 public class Validator {
 
+    private final static String DOUBLE_REGEX = "[\\p{Digit}]+(\\.[\\p{Digit}]+)?";
+
+    private final static String INTEGER_REGEX = "[\\p{Digit}]+";
+
     /**
      * Validates value, if criteria key is integer or double field.
      */
@@ -40,12 +44,12 @@ public class Validator {
     }
 
     private static boolean validateDouble(Object object) {
-        Matcher matcher = Pattern.compile("[\\p{Digit}]+(\\.[\\p{Digit}]+)?").matcher(String.valueOf(object));
+        Matcher matcher = Pattern.compile(DOUBLE_REGEX).matcher(String.valueOf(object));
         return matcher.matches();
     }
 
     private static boolean validateInteger(Object object) {
-        Matcher matcher = Pattern.compile("[\\p{Digit}]+").matcher(String.valueOf(object));
+        Matcher matcher = Pattern.compile(INTEGER_REGEX).matcher(String.valueOf(object));
         return matcher.matches();
     }
 }
